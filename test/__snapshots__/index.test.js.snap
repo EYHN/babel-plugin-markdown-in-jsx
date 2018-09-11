@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic usage 1`] = `
+"\\"use strict\\";
+
+var React = require('react');
+
+function TestComponent() {
+  return React.createElement(\\"div\\", null, React.createElement(\\"h1\\", null, \\"Title\\"), React.createElement(\\"p\\", null, \\"This is \\", React.createElement(\\"strong\\", null, \\"bold.\\")), React.createElement(\\"p\\", null, \\"Here is a \\", React.createElement(\\"a\\", {
+    href: \\"/some/url\\"
+  }, \\"link\\"), \\".\\"));
+}"
+`;
+
+exports[`basic usage inline 1`] = `
+"\\"use strict\\";
+
+var React = require('react');
+
+function TestComponent() {
+  return React.createElement(\\"div\\", null, \\"Here is \\", React.createElement(\\"span\\", null, React.createElement(\\"em\\", null, \\"interpolated\\"), \\" markdown\\"));
+}"
+`;
+
+exports[`bulitin component proxy 1`] = `"<div data-reactroot=\\"\\"><div>123</div><p>123<!-- -->abc</p>123</div>"`;
+
+exports[`call default 1`] = `
+"\\"use strict\\";
+
+var React = require('react');
+
+function TestComponent() {
+  return React.createElement(\\"div\\", null, React.createElement(\\"h1\\", null, \\"Title\\"), React.createElement(\\"p\\", null, \\"This is \\", React.createElement(\\"strong\\", null, \\"bold.\\")), React.createElement(\\"p\\", null, \\"Here is a \\", React.createElement(\\"a\\", {
+    href: \\"/some/url\\"
+  }, \\"link\\"), \\".\\"));
+}"
+`;
+
+exports[`extra props to element 1`] = `
+"\\"use strict\\";
+
+var React = require('react');
+
+function TestComponent() {
+  return React.createElement(\\"p\\", null, \\"Here is \\", React.createElement(\\"span\\", {
+    style: {
+      background: '#eee'
+    }
+  }, React.createElement(\\"em\\", null, \\"interpolated\\"), \\" markdown\\"));
+}"
+`;
+
+exports[`import declaration 1`] = `
+"\\"use strict\\";
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function TestComponent() {
+  return React.createElement(\\"div\\", null, React.createElement(\\"h1\\", null, \\"Title\\"), React.createElement(\\"p\\", null, \\"This is \\", React.createElement(\\"strong\\", null, \\"bold.\\")), React.createElement(\\"p\\", null, \\"Here is a \\", React.createElement(\\"a\\", {
+    href: \\"/some/url\\"
+  }, \\"link\\"), \\".\\"));
+}"
+`;
+
+exports[`nest Markdown components 1`] = `
+"\\"use strict\\";
+
+var React = require('react');
+
+function TestComponent() {
+  return React.createElement(\\"div\\", null, React.createElement(\\"p\\", null, React.createElement(\\"strong\\", null, \\"markdown\\")), React.createElement(\\"div\\", null, \\"**no markdown**\\"), React.createElement(\\"div\\", null, React.createElement(\\"p\\", null, React.createElement(\\"strong\\", null, \\"markdown\\"))));
+}"
+`;
+
+exports[`nested jsx 1`] = `
+"\\"use strict\\";
+
+var React = require('react');
+
+function TestComponent() {
+  var number = 4;
+  return React.createElement(\\"div\\", null, React.createElement(\\"p\\", null, \\"Here is a number: \\", React.createElement(\\"span\\", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, number), \\". Here it is again: \\", number, \\".\\"));
+}"
+`;
+
+exports[`transform to html with proxy 1`] = `
+"\\"use strict\\";
+
+var P = require(\\"Markdown/component/proxy\\");
+
+var React = require('react');
+
+function TestComponent() {
+  return React.createElement(P.div, null, React.createElement(P.p, null, React.createElement(P.strong, null, \\"markdown\\")), React.createElement(\\"div\\", null, \\"**no markdown**\\"), React.createElement(P.div, null, React.createElement(P.p, null, \\"123\\", React.createElement(P.br, null), React.createElement(P.strong, null, \\"markdown\\"))));
+}"
+`;
