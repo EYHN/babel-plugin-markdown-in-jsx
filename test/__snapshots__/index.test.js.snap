@@ -51,11 +51,7 @@ function TestComponent() {
 `;
 
 exports[`import declaration 1`] = `
-"\\"use strict\\";
-
-var React = _interopRequireWildcard(require(\\"react\\"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+"import * as React from 'react';
 
 function TestComponent() {
   return React.createElement(\\"div\\", null, React.createElement(\\"h1\\", null, \\"Title\\"), React.createElement(\\"p\\", null, \\"This is \\", React.createElement(\\"strong\\", null, \\"bold.\\")), React.createElement(\\"p\\", null, \\"Here is a \\", React.createElement(\\"a\\", {
@@ -98,5 +94,16 @@ var React = require('react');
 
 function TestComponent() {
   return React.createElement(P.div, null, React.createElement(P.p, null, React.createElement(P.strong, null, \\"markdown\\")), React.createElement(\\"div\\", null, \\"**no markdown**\\"), React.createElement(P.div, null, React.createElement(P.p, null, \\"123\\", React.createElement(P.br, null), React.createElement(P.strong, null, \\"markdown\\"))));
+}"
+`;
+
+exports[`transform to html with proxy esmodules 1`] = `
+"import * as P from \\"Markdown/component/proxy\\";
+import * as React from 'react';
+
+function TestComponent() {
+  return React.createElement(P.div, null, React.createElement(P.h1, null, \\"Title\\"), React.createElement(P.p, null, \\"This is \\", React.createElement(P.strong, null, \\"bold.\\")), React.createElement(P.p, null, \\"Here is a \\", React.createElement(P.a, {
+    href: \\"/some/url\\"
+  }, \\"link\\"), \\".\\"));
 }"
 `;

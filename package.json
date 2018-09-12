@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-markdown-in-jsx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Transform Markdown inside JSX to DOM elements at compile time.",
   "main": "index.js",
   "scripts": {

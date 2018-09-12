@@ -174,8 +174,8 @@ module.exports = babel => {
       while (jsxIdentifierPath.scope.hasBinding(declaratorName)) {
         declaratorName = 'P_' + i++;
       }
+      const ProgramPath = jsxIdentifierPath.findParent(babelTypes.isProgram);
       if (state.commonjs) {
-        const ProgramPath = jsxIdentifierPath.findParent(babelTypes.isProgram);
         ProgramPath.unshiftContainer('body',
           babelTypes.variableDeclaration('var', [
             babelTypes.variableDeclarator(babelTypes.identifier(declaratorName),
@@ -183,6 +183,14 @@ module.exports = babel => {
                 babelTypes.stringLiteral(join(options.package, 'component/proxy'))
               ])
             )])
+        );
+        state.proxyContextName = declaratorName;
+      } else {
+        ProgramPath.unshiftContainer('body',
+          babelTypes.importDeclaration(
+            [babelTypes.importNamespaceSpecifier(babelTypes.identifier(declaratorName))],
+            babelTypes.stringLiteral(join(options.package, 'component/proxy'))
+          )
         );
         state.proxyContextName = declaratorName;
       }

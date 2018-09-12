@@ -60,7 +60,7 @@ function TestComponent() {
 }`;
 
   const code = babel.transform(renderBody, {
-    presets: [babelEnv, babelReact],
+    presets: [babelReact],
     plugins: [[plugin, {package: 'Markdown'}]]
   }).code
 
@@ -148,4 +148,27 @@ test('transform to html with proxy', () => {
   )`;
 
   expect(transform(renderBody, {proxy: true})).toMatchSnapshot();
+});
+
+test('transform to html with proxy esmodules', () => {
+  const renderBody = `import * as React from 'react';
+  import Markdown from 'Markdown/component';
+  function TestComponent() {
+    return (
+      <Markdown>
+        # Title
+  
+        This is **bold.**
+  
+        Here is a [link](/some/url).
+      </Markdown>
+    )
+  }`;
+
+  const code = babel.transform(renderBody, {
+    presets: [babelReact],
+    plugins: [[plugin, {package: 'Markdown', proxy: true}]]
+  }).code
+
+  expect(code).toMatchSnapshot();
 });
