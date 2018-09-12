@@ -88,7 +88,7 @@ function TestComponent() {
 
 在 `Markdown` 组件上加上 inline 属性，可以使用 inline 模式编译。
 
-``` html
+``` js
 <Markdown>
   123
 </Markdown>
@@ -136,9 +136,9 @@ import * as Proxy from 'babel-plugin-markdown-in-jsx/component/proxy';
 
 再使用 `<Proxy.Provider />` 并设置 `value` 属性
 
-比如要替换文中所有的 `<img />` 和 `<h1 />`
+比如要替换文中所有的 `<img />` 和 `<h1 />`
 
-``` html
+``` js
 <Proxy.Provider 
   value={{
     img: CustomImage,
@@ -149,9 +149,9 @@ import * as Proxy from 'babel-plugin-markdown-in-jsx/component/proxy';
 </Proxy.Provider>
 ```
 
-`<Proxy.Provider />` 下面的所有 `<Markdown />` 都会被设置影响。
+`<Proxy.Provider />` 下面的所有 `<Markdown />` 都会被设置影响。
 
-下面是一个为所有的图片增加红色边框的例子。
+下面是一个为所有的图片增加红色边框的例子。
 
 ``` js
 import * as React from 'react';
