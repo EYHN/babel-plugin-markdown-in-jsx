@@ -15,9 +15,7 @@ module.exports = babel => {
   const babelTypes = babel.types;
   const md = markdownIt({
     // Allow for HTML comment placeholders.
-    // Text on new lines other than HTML comments would produce <p> tags.
-    html: true,
-    breaks: true
+    html: true
   });
 
   const markdownToJsx = (markdown, options) => {
