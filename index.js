@@ -74,7 +74,7 @@ module.exports = babel => {
       const after = mdWithoutJsx.slice(replacement.node.end - mdStartIndex);
       mdWithoutJsx = [
         before,
-        `<!--${replacement.placeholder}-->`,
+        `$${replacement.placeholder}$`,
         after
       ].join('');
     });
@@ -106,6 +106,52 @@ module.exports = babel => {
               path.replaceWith(replacements[index].node);
               return;
             }
+          }
+        }
+      },
+      JSXText(path) {
+        const strs = path.node.value.split(/(\$bpjm\d+\$)/);
+        if (strs.length > 1) 
+        {
+          path.replaceWithMultiple(
+            strs.map((text) => {
+              if (/^\$bpjm\d+\$$/.test(text)) {
+                for (let index = 0; index < replacements.length; index++) {
+                  const placeholder = replacements[index].placeholder;
+                  if (text === '$' + placeholder + '$') {
+                    return replacements[index].node;
+                  }
+                }
+              }
+              return babelTypes.jsxText(text)
+            })
+          );
+        }
+      },
+      JSXAttribute(path) {
+        if (babelTypes.isStringLiteral(path.node.value))
+        {
+          const strs = path.node.value.value.split(/(\$bpjm\d+\$)/);
+          if (strs.length > 1) 
+          {
+            path.get('value').replaceWith(babelTypes.JSXExpressionContainer(
+              strs.map((text) => {
+                if (/^\$bpjm\d+\$$/.test(text)) {
+                  for (let index = 0; index < replacements.length; index++) {
+                    const placeholder = replacements[index].placeholder;
+                    if (text === '$' + placeholder + '$') {
+                      if (babelTypes.isJSXExpressionContainer(replacements[index].node)) {
+                        return replacements[index].node.expression;
+                      }
+                      return replacements[index].node;
+                    }
+                  }
+                }
+                return babelTypes.stringLiteral(text)
+              }).reduce((pre, value) => {
+                return babelTypes.binaryExpression('+', pre, value);
+              })
+            ));
           }
         }
       }

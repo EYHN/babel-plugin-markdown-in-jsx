@@ -115,6 +115,20 @@ test('nest Markdown components', () => {
   expect(transform(renderBody)).toMatchSnapshot();
 });
 
+test('with variable img href', () => {
+  const renderBody = `
+    const h = 'http://example.com';
+    return (
+      <Markdown>
+        # Title
+
+        ![](123{h})
+      </Markdown>
+    )`;
+
+  expect(transform(renderBody)).toMatchSnapshot();
+});
+
 test('bulitin component proxy', () => {
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
