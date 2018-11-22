@@ -63,11 +63,14 @@ import Markdown from 'babel-plugin-markdown-in-jsx/component';
 
 ``` js
 function TestComponent() {
+  const imgsrc = 'img.png';
   return (
     <Markdown>
       # Markdown Hello world
 
       也可以插入JS表达式: log(E) = {Math.log(Math.E)}
+
+      图片的链接也可以写变量: ![图片](http://{imgsrc})
 
       <div>
         这里的内容不会被编译。
