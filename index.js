@@ -13,12 +13,8 @@ const defaultOptions = {
 
 module.exports = babel => {
   const babelTypes = babel.types;
-  const md = markdownIt({
-    // Allow for HTML comment placeholders.
-    html: true
-  });
 
-  const markdownToJsx = (markdown, options) => {
+  const markdownToJsx = (markdown, options, md) => {
     const text = stripIndent(markdown).trim();
     let html = options.inline ? md.renderInline(text) : md.render(text);
     const converter = new HTMLtoJSX({ createClass: false, tagName: options.tagName });
@@ -33,7 +29,7 @@ module.exports = babel => {
     return jsx;
   };
 
-  function processJSXElement(path, options) {
+  function processJSXElement(path, options, md) {
     const inline = path
       .get('openingElement')
       .node.attributes.some(attribute => {
@@ -78,7 +74,7 @@ module.exports = babel => {
         after
       ].join('');
     });
-    let jsx = markdownToJsx(mdWithoutJsx, { inline, tagName: options.proxy === true && (name => options.proxyContextName + '.' + name) });
+    let jsx = markdownToJsx(mdWithoutJsx, { inline, tagName: options.proxy === true && (name => options.proxyContextName + '.' + name) }, md);
     // replacements.forEach(replacement => {
     //   // The HTML placeholder will have been replaced by a JSX comment.
     //   const jsxPlaceholder = `{/* ${replacement.placeholder} */}`;
@@ -242,7 +238,33 @@ module.exports = babel => {
     const jsxElementPath = jsxIdentifierPath.findParent(
       babelTypes.isJSXElement
     );
-    processJSXElement(jsxElementPath, Object.assign({}, options, { proxyContextName: state.proxyContextName }));
+
+    const md = markdownIt({
+      html: true,
+      ...options.markdownOptions
+    });
+
+    if (options.markdownPlugins) {
+      if (options.markdownPlugins instanceof Array) {
+        options.markdownPlugins.forEach(plugin => {
+          if (plugin instanceof Array) {
+            let [p, ...opts] = plugin;
+            if (typeof p === 'string') {
+              p = require(p);
+            }
+            md.use(p, ...opts);
+          } else if (typeof plugin === 'string') {
+            md.use(require(plugin));
+          } else {
+            md.use(plugin);
+          }
+        });
+      } else {
+        throw new Error('Option \'plugins\' should be a array.');
+      }
+    }
+
+    processJSXElement(jsxElementPath, Object.assign({}, options, { proxyContextName: state.proxyContextName }), md);
   };
 
   return { visitor };

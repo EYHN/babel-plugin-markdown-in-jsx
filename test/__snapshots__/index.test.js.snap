@@ -60,6 +60,15 @@ function TestComponent() {
 }"
 `;
 
+exports[`markdown options 1`] = `
+"import * as P from \\"Markdown/component/proxy\\";
+import * as React from 'react';
+
+function TestComponent() {
+  return React.createElement(P.div, null, React.createElement(P.h1, null, \\"Title\\"), React.createElement(P.p, null, \\"1\\", React.createElement(P.br, null), \\"2\\", React.createElement(P.br, null), \\"3\\"));
+}"
+`;
+
 exports[`nest Markdown components 1`] = `
 "\\"use strict\\";
 
@@ -82,6 +91,24 @@ function TestComponent() {
       fontWeight: 'bold'
     }
   }, number), \\". Here it is again: \\", number, \\".\\"));
+}"
+`;
+
+exports[`plugins 1`] = `
+"import * as P from \\"Markdown/component/proxy\\";
+import * as React from 'react';
+
+function TestComponent() {
+  return React.createElement(P.div, null, React.createElement(P.h1, null, \\"Title\\"), React.createElement(P.p, null, \\"H\\", React.createElement(P.sub, null, \\"2\\"), \\"0\\"));
+}"
+`;
+
+exports[`plugins 2`] = `
+"import * as P from \\"Markdown/component/proxy\\";
+import * as React from 'react';
+
+function TestComponent() {
+  return React.createElement(P.div, null, React.createElement(P.h1, null, \\"Title\\"), React.createElement(P.p, null, \\"H\\", React.createElement(P.sub, null, \\"2\\"), \\"0\\"));
 }"
 `;
 

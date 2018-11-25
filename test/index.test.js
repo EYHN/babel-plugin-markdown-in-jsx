@@ -186,3 +186,53 @@ test('transform to html with proxy esmodules', () => {
 
   expect(code).toMatchSnapshot();
 });
+
+test('plugins', () => {
+  const renderBody = `import * as React from 'react';
+  import Markdown from 'Markdown/component';
+  function TestComponent() {
+    return (
+      <Markdown>
+        # Title
+  
+        H~2~0
+      </Markdown>
+    )
+  }`;
+
+  const code1 = babel.transform(renderBody, {
+    presets: [babelReact],
+    plugins: [[plugin, {package: 'Markdown', proxy: true, markdownPlugins: ['markdown-it-sub']}]]
+  }).code
+
+  const code2 = babel.transform(renderBody, {
+    presets: [babelReact],
+    plugins: [[plugin, {package: 'Markdown', proxy: true, markdownPlugins: [require('markdown-it-sub')]}]]
+  }).code
+
+  expect(code1).toMatchSnapshot();
+  expect(code2).toMatchSnapshot();
+  expect(code1).toStrictEqual(code2);
+});
+
+test('markdown options', () => {
+  const renderBody = `import * as React from 'react';
+  import Markdown from 'Markdown/component';
+  function TestComponent() {
+    return (
+      <Markdown>
+        # Title
+        1
+        2
+        3
+      </Markdown>
+    )
+  }`;
+
+  const code = babel.transform(renderBody, {
+    presets: [babelReact],
+    plugins: [[plugin, {package: 'Markdown', proxy: true, markdownOptions: {breaks: true}}]]
+  }).code
+
+  expect(code).toMatchSnapshot();
+});
